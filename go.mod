@@ -1,8 +1,9 @@
 module github.com/myENA/license-key
 
-go 1.12
+go 1.24.0
 
-require (
-	golang.org/x/crypto v0.0.0-20190820162420-60c769a6c586
-	golang.org/x/sys v0.0.0-20190813064441-fde4db37ae7a // indirect
-)
+toolchain go1.24.1
+
+require golang.org/x/crypto v0.43.0
+
+require golang.org/x/sys v0.37.0 // indirect
