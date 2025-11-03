@@ -1,4 +1,4 @@
-module github.com/myENA/license-key
+module github.com/Lightspeed-Systems/license-key
 
 go 1.24.0
 
