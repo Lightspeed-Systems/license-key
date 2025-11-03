@@ -3,7 +3,7 @@ package lk_test
 import (
 	"testing"
 
-	lk "github.com/myENA/license-key"
+	lk "github.com/Lightspeed-Systems/license-key"
 )
 
 const goodKey = "2af1fe29-9d2771ad-6fb1a3b8-39b276bf-4db2ef1d-4a053327"
@@ -21,24 +21,24 @@ func TestNew(t *testing.T) {
 
 // TestParse tests key parsing and validation
 func TestParse(t *testing.T) {
-		tests := []struct{
-			k string
-			b bool
-		} {
-			{ "2af1fe29-9d2771ad-6fb1a3b8-39b276bf-4db2ef1d-4a053327", true },
-			{ "3af1fe29-9d2771ad-6fb1a3b8-39b276bf-4db2ef1d-4a053327", false },
-			{ "2af1fe29-9d2771ad-6fb1a3b8-39b276bf-4db2ef1d-4a053328", false },
-			{ "2af1fe29-9d2771ad-6fb1a3b8-39b276bf-4db2ef1d4a053327", false },
-			{ "2af1fe299d2771ad6fb1a3b839b276bf4db2ef1d4a053327", false },
-			{"", false},
+	tests := []struct {
+		k string
+		b bool
+	}{
+		{"2af1fe29-9d2771ad-6fb1a3b8-39b276bf-4db2ef1d-4a053327", true},
+		{"3af1fe29-9d2771ad-6fb1a3b8-39b276bf-4db2ef1d-4a053327", false},
+		{"2af1fe29-9d2771ad-6fb1a3b8-39b276bf-4db2ef1d-4a053328", false},
+		{"2af1fe29-9d2771ad-6fb1a3b8-39b276bf-4db2ef1d4a053327", false},
+		{"2af1fe299d2771ad6fb1a3b839b276bf4db2ef1d4a053327", false},
+		{"", false},
+	}
+	for _, test := range tests {
+		k, err := lk.Parse(test.k)
+		if test.b && (k == nil || err != nil) {
+			t.Errorf("failed to test valid key: %s", err)
 		}
-	    for _, test := range tests {
-	    	k, err := lk.Parse(test.k)
-			if test.b && (k == nil || err != nil) {
-				t.Errorf("failed to test valid key: %s", err)
-			}
-	    	if !test.b && (k!= nil || err == nil) {
-	    		t.Errorf("parsed invalid key without error: %s", test.k)
-			}
+		if !test.b && (k != nil || err == nil) {
+			t.Errorf("parsed invalid key without error: %s", test.k)
 		}
+	}
 }
